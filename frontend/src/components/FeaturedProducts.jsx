@@ -34,7 +34,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
     return (
         <div className='py-12'>
             <div className="container mx-auto px-4">
-                <h2 className="text-center text-5xl sm:text-6xl font-bold text-emerald-400 mb-4">Featured</h2>
+                <h2 className="text-center text-3xl sm:text-4xl font-bold text-emerald-400 mb-4">Featured</h2>
                 <div className="relative">
                     <div className="overflow-hidden">
                         <div className="flex transition-transform duration-300 ease-in-out"

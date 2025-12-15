@@ -10,6 +10,29 @@ export const getAllProducts = async (req, res) => {
     }
 };
 
+export const fetchingPaginationProducts = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 5;
+        const skip = (page - 1) * limit;
+
+        const products = await Product.find().skip(skip).limit(limit);
+        const productCount = await Product.countDocuments()
+
+        const total = await Product.countDocuments();
+
+        res.json({
+            products,
+            productCount,
+            total,
+            page,
+            totalPages: Math.ceil(total / limit)
+        })
+    } catch (error) {
+        res.status(500).json({ message: "Server error" })
+    }
+}
+
 export const getFeaturedProducts = async (req, res) => {
     try {
         let featuredProducts = await Product.find({ isFeatured: true }).limit(8).lean();

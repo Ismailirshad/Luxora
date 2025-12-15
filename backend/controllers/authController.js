@@ -2,14 +2,25 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { sendWelcomeEmail } from "../email/emailHandler.js";
 
 dotenv.config();
 
 export const signup = async (req, res) => {
     try {
         const { email, password, name } = req.body;
+        if (password.length < 6) {
+            return res.status(400).json({ messsage: "Password must be at least 6 characters" })
+        }
+
+        //check if emails are valid: regex
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ messsage: "Invalid email format" })
+        }
+
         const userExists = await User.findOne({ email })
-        if (userExists) return res.status(500).send({message:"User already exists"});
+        if (userExists) return res.status(500).send({ message: "User already exists" });
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -26,6 +37,12 @@ export const signup = async (req, res) => {
 
         const { _id } = user;
         res.status(201).json({ message: "User created successfully", user: { _id, name, email } }) //removed password from response for security purpose
+
+        try {
+            await sendWelcomeEmail(user.email, user.fullName, process.env.CLIENT_URL)
+        } catch (error) {
+            console.error("Failed to send welcome email:", error)
+        }
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
@@ -50,9 +67,9 @@ export const login = async (req, res) => {
         }
 
         const user = await User.findOne({ email })
-        if (!user) return res.status(404).send({message:"User does not exists"});
+        if (!user) return res.status(404).send({ message: "User does not exists" });
         const isPasswordValid = await bcrypt.compare(password, user.password)
-        if (!isPasswordValid) return res.status(400).json({message:"Invalid Credentials"});
+        if (!isPasswordValid) return res.status(400).json({ message: "Invalid Credentials" });
 
         // Generating the token for the user
         const newtoken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
@@ -64,7 +81,7 @@ export const login = async (req, res) => {
             maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
         })
 
-        res.status(200).json({ message: "User logged in successfully",user })    
+        res.status(200).json({ message: "User logged in successfully", user })
     } catch (error) {
         res.status(401).json({ message: error.message })
     }
@@ -89,6 +106,6 @@ export const getProfile = async (req, res) => {
     try {
         res.json(req.user);
     } catch (error) {
-        res.status(500).json({message:"Server error", error: error.message});
+        res.status(500).json({ message: "User not found, Please Login", error: error.message });
     }
 }

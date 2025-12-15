@@ -1,52 +1,56 @@
-import React from 'react'
+import { useEffect } from 'react'
 import { useProductStore } from '../store/useProductStore.js'
-import {motion} from "framer-motion"
+import { motion } from "framer-motion"
 import { Star, Trash } from 'lucide-react';
 
 const ProductsList = () => {
-  const {deleteProduct, toggleFeaturedProduct, products} = useProductStore();
-  
+  const { deleteProduct, toggleFeaturedProduct, fetchingPaginationProducts, totalPages, page, products, productCount } = useProductStore();
+
+  useEffect(() => {
+    fetchingPaginationProducts(1);
+  }, [])
+
   return (
     <motion.div
-    className='bg-gray-800 shadow-lg rounded-lg overflow-hidden max-w-4xl mx-auto '
-    initial={{opacity:0, y: 20}}
-    animate={{opacity:1, y: 0}}
-    transition={{duration:0.8}}
+      className='bg-gray-800 shadow-lg rounded-lg overflow-hidden max-w-4xl mx-auto '
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
     >
       <table className='min-w-full divide-y divide-gray-700'>
         <thead className='bg-gray-700'>
           <tr>
             <th scope='col'
-                className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'
-                >
-                  Product
-                </th>
-                  <th scope='col'
-                className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'
-                >
-                  Price
-                </th>
-                  <th scope='col'
-                className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'
-                >
-                  Category
-                </th>
-                  <th scope='col'
-                className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'
-                >
-                  Featured
-                </th>
-                  <th scope='col'
-                className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'
-                >
-                  Actions
-                </th>
+              className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'
+            >
+              Product
+            </th>
+            <th scope='col'
+              className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'
+            >
+              Price
+            </th>
+            <th scope='col'
+              className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'
+            >
+              Category
+            </th>
+            <th scope='col'
+              className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'
+            >
+              Featured
+            </th>
+            <th scope='col'
+              className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'
+            >
+              Actions
+            </th>
           </tr>
 
         </thead>
 
         <tbody className='bg-gray-800 divide-y divide-gray-700'>
-          {products?.map((product) =>(
+          {products?.map((product) => (
             <tr key={product._id} className='hover:bg-gray-700'>
               <td className='px-6 py-4 whitespace-nowrap'>
                 <div className="flex items-center">
@@ -60,36 +64,73 @@ const ProductsList = () => {
               </td>
 
               <td className='px-6 py-4 whitespace-nowrap'>
-								<div className='text-sm text-gray-300'>${product.price.toFixed(2)}</div>
-							</td>
-							<td className='px-6 py-4 whitespace-nowrap'>
-								<div className='text-sm text-gray-300'>{product.category}</div>
-							</td>
+                <div className='text-sm text-gray-300'>${product.price.toFixed(2)}</div>
+              </td>
               <td className='px-6 py-4 whitespace-nowrap'>
-								<button
-									onClick={() => toggleFeaturedProduct(product._id)}
-									className={`p-1 rounded-full 
-                    ${ product.isFeatured ? "bg-yellow-400 text-gray-900" : "bg-gray-600 text-gray-300"}
+                <div className='text-sm text-gray-300'>{product.category}</div>
+              </td>
+              <td className='px-6 py-4 whitespace-nowrap'>
+                <button
+                  onClick={() => toggleFeaturedProduct(product._id)}
+                  className={`p-1 rounded-full 
+                    ${product.isFeatured ? "bg-yellow-400 text-gray-900" : "bg-gray-600 text-gray-300"}
                      hover:bg-yellow-500 transition-colors duration-200`}
-								>
-									<Star className='h-5 w-5' />
+                >
+                  <Star className='h-5 w-5' />
 
-								</button>
-							</td>
-              	<td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
-								<button
-									onClick={() => deleteProduct(product._id)}
-									className='text-red-400 hover:text-red-300'
-								>
-									<Trash className='h-5 w-5' />
-								</button>
-							</td>
+                </button>
+              </td>
+              <td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
+                <button
+                  onClick={() => deleteProduct(product._id)}
+                  className='text-red-400 hover:text-red-300'
+                >
+                  <Trash className='h-5 w-5' />
+                </button>
+              </td>
             </tr>
           ))}
-
         </tbody>
       </table>
-      
+      <div className="flex items-center justify-center gap-4 mt-4">
+
+        <button
+          disabled={page === 1}
+          onClick={() => fetchingPaginationProducts(page - 1)}
+          className={`px-4 py-2 rounded-lg border transition
+      ${page === 1
+              ? "bg-gray-700 text-gray-500 cursor-not-allowed border-gray-600"
+              : "bg-gray-900 text-gray-200 border-gray-700 hover:bg-gray-800 hover:scale-105"}`
+          }
+        >
+          ← Prev
+        </button>
+
+        <div className="flex items-center gap-2 text-sm  font-light">
+          <span className="text-emerald-300 font-semibold">{productCount} </span>
+          <span className="text-slate-200">Products •</span>
+          <span>
+            Page <span className="font-medium text-yellow-400">{page}</span> of{" "}
+            <span className="font-medium text-yellow-400">{totalPages}</span>
+          </span>
+        </div>
+
+
+        <button
+          disabled={page === totalPages}
+          onClick={() => fetchingPaginationProducts(page + 1)}
+          className={`px-4 py-2 rounded-lg border transition
+      ${page === totalPages
+              ? "bg-gray-700 text-gray-500 cursor-not-allowed border-gray-600"
+              : "bg-gray-900 text-gray-200 border-gray-700 hover:bg-gray-800 hover:scale-105"}`
+          }
+        >
+          Next →
+        </button>
+
+      </div>
+
+
     </motion.div>
   )
 }
