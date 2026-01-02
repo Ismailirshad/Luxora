@@ -1,8 +1,7 @@
-import React from 'react'
+import { useProductStore } from '../store/useProductStore.js';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Loader, PlusCircle, Upload } from 'lucide-react';
-import { useProductStore } from '../store/useProductStore.js';
 const categories = ["jeans", "t-shirts", "shoes", "glasses", "jackets", "suits", "bags"];
 const CreateProductForm = () => {
     const [newProduct, setNewProduct] = useState({

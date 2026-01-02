@@ -1,6 +1,6 @@
+import api from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { create } from "zustand";
-import api from "../lib/axios";
 
 export const useUserStore = create((set, get) => ({
     user: null,

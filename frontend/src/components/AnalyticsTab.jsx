@@ -1,9 +1,8 @@
-import React from 'react'
+import api from '../lib/axios.js'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { DollarSign, Package, ShoppingCart, Users } from 'lucide-react'
 import { useEffect } from 'react'
-import api from '../lib/axios.js'
 import { CartesianGrid, LineChart, ResponsiveContainer, YAxis, XAxis, Tooltip, Legend, Line } from 'recharts';
 
 const AnalyticsTab = () => {
@@ -54,7 +53,7 @@ const AnalyticsTab = () => {
         />
         <AnalyticsCard title='Total Revenue'
 
-          value={analyticsData.totalRevenue.toLocaleString()} 
+          value={analyticsData.totalRevenue.toLocaleString()}
           icon={DollarSign}
           color='from-emerald-500 to-teal-700'
         />

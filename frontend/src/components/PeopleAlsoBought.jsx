@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import api from '../lib/axios.js';
 import toast from 'react-hot-toast';
 import LoadingSpinner from './LoadingSpinner';
@@ -8,21 +8,21 @@ const PeopleAlsoBought = () => {
   const [recommendation, setRecommendation] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() =>{
-   const fetchRecommendation = async () => {
-    try {
-      const res = await api.get('/products/recomendation');
-      setRecommendation(res.data);
-    } catch (error) {
-      toast.error(error.res.data.message || "An error occured while fetching recomendations")
-    }finally{
-      setLoading(false);
+  useEffect(() => {
+    const fetchRecommendation = async () => {
+      try {
+        const res = await api.get('/products/recomendation');
+        setRecommendation(res.data);
+      } catch (error) {
+        toast.error(error.res.data.message || "An error occured while fetching recomendations")
+      } finally {
+        setLoading(false);
+      }
     }
-   }
-   fetchRecommendation();
+    fetchRecommendation();
   }, [])
 
-  if(loading) return <LoadingSpinner />
+  if (loading) return <LoadingSpinner />
   return (
     <div className='mt-8'>
       <h3 className="text-2xl font-semibold text-emerald-400">Peolple also bought</h3>
@@ -31,7 +31,7 @@ const PeopleAlsoBought = () => {
           <ProductCard key={product._id} product={product} />
         ))}
       </div>
-      
+
     </div>
   )
 }

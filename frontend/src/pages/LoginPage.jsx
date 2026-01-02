@@ -1,8 +1,8 @@
+import { useUserStore } from '../store/useUserStore.js';
 import  { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowRight, Loader, Lock, LogIn, Mail } from 'lucide-react';
-import { useUserStore } from '../store/useUserStore.js';
 
 
 const LoginPage = () => {

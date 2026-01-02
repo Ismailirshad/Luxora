@@ -1,5 +1,5 @@
-import toast from "react-hot-toast";
 import api from "../lib/axios.js"
+import toast from "react-hot-toast";
 import { create } from "zustand";
 
 export const useProductStore = create((set) => ({
@@ -50,7 +50,6 @@ export const useProductStore = create((set) => ({
         try {
             const res = await api.get("/products")
             set({ products: res.data, loading: false })
-            console.log("hee", products)
         } catch (error) {
             set({ error: error.res?.data.message, loading: false })
             // toast.error(error.res?.data.message || "Failed to fetch products")

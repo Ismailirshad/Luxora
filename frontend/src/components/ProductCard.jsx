@@ -1,9 +1,8 @@
-import React from 'react'
-import Product from '../../../backend/models/Product.js'
-import { ShoppingCart } from 'lucide-react'
 import { useCartStore } from '../store/useCartStore.js'
-import toast from 'react-hot-toast'
 import { useUserStore } from '../store/useUserStore.js'
+import React from 'react'
+import { ShoppingCart } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 const ProductCard = ({ product }) => {
 	const { addToCart } = useCartStore()
@@ -19,7 +18,7 @@ const ProductCard = ({ product }) => {
 	return (
 		<div className='flex  w-full relative flex-col overflow-hidden rounded-lg border border-gray-700 shadow-lg'>
 			<div className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl">
-				<img src={product.image} alt={product.name} className='object-cover w-full' />
+				<img src={product.image} alt={product.name} className='object-cover w-full' loading='lazy' decoding='async' />
 				<div className="absolute inset-0 bg-black bg-opacity-20"></div>
 			</div>
 
@@ -44,4 +43,4 @@ const ProductCard = ({ product }) => {
 	)
 }
 
-export default ProductCard
+export default React.memo(ProductCard)

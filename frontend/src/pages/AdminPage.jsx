@@ -1,11 +1,11 @@
+import { useProductStore } from '../store/useProductStore.js';
+import AnalyticsTab from '../components/AnalyticsTab';
+import CreateProductForm from '../components/CreateProductForm';
+import ProductsList from '../components/ProductsList';
 import { BarChart, PlusCircle, ShoppingBasket } from 'lucide-react';
 import { useEffect } from 'react'
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import CreateProductForm from '../components/CreateProductForm';
-import ProductsList from '../components/ProductsList';
-import AnalyticsTab from '../components/AnalyticsTab';
-import { useProductStore } from '../store/useProductStore.js';
 
 const tabs = [
     { id: "create", label: "Create Product", icon: PlusCircle },

@@ -1,8 +1,8 @@
 import User from "../models/User.js";
+import { sendWelcomeEmail } from "../email/emailHandler.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { sendWelcomeEmail } from "../email/emailHandler.js";
 
 dotenv.config();
 

@@ -14,7 +14,9 @@ import PurchaseCancelPage from './components/PurchaseCancelPage'
 import RateLimitedUi from './components/rateLimiterUi'
 
 function App() {
-  const { user, checkAuth, checkingAuth } = useUserStore();
+  const user = useUserStore((state) => state.user);
+  const checkAuth = useUserStore((state) => state.checkAuth);
+  const checkingAuth = useUserStore((state) => state.checkingAuth);
   const navigate = useNavigate();
 
   useEffect(() => {

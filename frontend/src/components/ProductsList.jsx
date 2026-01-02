@@ -1,10 +1,16 @@
-import { useEffect } from 'react'
 import { useProductStore } from '../store/useProductStore.js'
+import React, { useEffect } from 'react'
 import { motion } from "framer-motion"
-import { Star, Trash } from 'lucide-react';
+import ProductRow from './ProductRow.jsx';
 
 const ProductsList = () => {
-  const { deleteProduct, toggleFeaturedProduct, fetchingPaginationProducts, totalPages, page, products, productCount } = useProductStore();
+  const deleteProduct = useProductStore(s => s.deleteProduct);
+  const totalPages = useProductStore(s => s.totalPages);
+  const productCount = useProductStore(s => s.productCount);
+  const page = useProductStore((state) => state.page);
+  const products = useProductStore((state) => state.products);
+  const toggleFeaturedProduct = useProductStore((state) => state.toggleFeaturedProduct);
+  const fetchingPaginationProducts = useProductStore((state) => state.fetchingPaginationProducts);
 
   useEffect(() => {
     fetchingPaginationProducts(1);
@@ -51,44 +57,7 @@ const ProductsList = () => {
 
         <tbody className='bg-gray-800 divide-y divide-gray-700'>
           {products?.map((product) => (
-            <tr key={product._id} className='hover:bg-gray-700'>
-              <td className='px-6 py-4 whitespace-nowrap'>
-                <div className="flex items-center">
-                  <div className="flex-shrink-0 h-10 w-10">
-                    <img className='h-10 w-10 rounded-full object-cover' src={product.image} alt={product.name} />
-                  </div>
-                  <div className="ml-4">
-                    <div className="text-sm font-medium text-white">{product.name}</div>
-                  </div>
-                </div>
-              </td>
-
-              <td className='px-6 py-4 whitespace-nowrap'>
-                <div className='text-sm text-gray-300'>${product.price.toFixed(2)}</div>
-              </td>
-              <td className='px-6 py-4 whitespace-nowrap'>
-                <div className='text-sm text-gray-300'>{product.category}</div>
-              </td>
-              <td className='px-6 py-4 whitespace-nowrap'>
-                <button
-                  onClick={() => toggleFeaturedProduct(product._id)}
-                  className={`p-1 rounded-full 
-                    ${product.isFeatured ? "bg-yellow-400 text-gray-900" : "bg-gray-600 text-gray-300"}
-                     hover:bg-yellow-500 transition-colors duration-200`}
-                >
-                  <Star className='h-5 w-5' />
-
-                </button>
-              </td>
-              <td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
-                <button
-                  onClick={() => deleteProduct(product._id)}
-                  className='text-red-400 hover:text-red-300'
-                >
-                  <Trash className='h-5 w-5' />
-                </button>
-              </td>
-            </tr>
+            <ProductRow key={product._id} product={product} toggleFeaturedProduct={toggleFeaturedProduct} deleteProduct={deleteProduct} />
           ))}
         </tbody>
       </table>
@@ -130,9 +99,8 @@ const ProductsList = () => {
 
       </div>
 
-
     </motion.div>
   )
 }
 
-export default ProductsList
+export default React.memo(ProductsList)

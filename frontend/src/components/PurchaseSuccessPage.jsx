@@ -1,9 +1,9 @@
+import { useCartStore } from '../store/useCartStore.js'
+import api from '../lib/axios.js'
 import { ArrowRight, CheckCircle, HandHeart } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import Confetti from 'react-confetti'
 import { useEffect, useState } from 'react'
-import api from '../lib/axios'
-import { useCartStore } from '../store/useCartStore'
 
 const PurchaseSuccessPage = () => {
 	const { clearCart } = useCartStore();

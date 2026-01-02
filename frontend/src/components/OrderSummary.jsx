@@ -1,9 +1,9 @@
-import { motion } from 'framer-motion'
 import { useCartStore } from '../store/useCartStore.js';
+import api from '../lib/axios.js';
+import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom';
 import { MoveRight } from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
-import api from '../lib/axios.js';
 
 const stripePromise = loadStripe("pk_test_51SMP1DAegYSrX5aauQHxsz2mt2OVarEQgKCDxOuLzAKnfb5vuAjeUvqUTzMIUK2mMcl1Qpj34cWZwSXwymimDA1F00A9iQNojg");
 const OrderSummary = () => {

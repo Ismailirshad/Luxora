@@ -1,7 +1,7 @@
+import { useCartStore } from '../store/useCartStore.js';
+import { useUserStore } from '../store/useUserStore.js';
 import { Lock, LogInIcon, LogOut, ShoppingCart, UserPlus } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useUserStore } from '../store/useUserStore.js';
-import { useCartStore } from '../store/useCartStore.js';
 import { useEffect } from 'react';
 
 const Navbar = () => {
@@ -33,7 +33,7 @@ const Navbar = () => {
 
 
                     <nav className="flex flex-wrap items-center gap-4">
-                        <Link to={'/'} classNam=''>Home</Link>
+                        <Link to={'/'} >Home</Link>
                         {user && (
                             <Link to={'/cart'} className='relative group text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'>
                                 <ShoppingCart className='inline-block mr-1 group-hover:text-emerald-400' size={20} />

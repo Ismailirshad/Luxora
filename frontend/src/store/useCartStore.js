@@ -1,5 +1,5 @@
+import api from "../lib/axios.js"
 import toast from "react-hot-toast";
-import api from "../lib/axios"
 import { create } from "zustand"
 
 export const useCartStore = create((set, get) => ({
