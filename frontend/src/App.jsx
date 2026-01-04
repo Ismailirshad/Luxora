@@ -21,7 +21,7 @@ function App() {
 
   useEffect(() => {
     checkAuth(navigate);
-  }, [checkAuth]);
+  },[checkAuth]);
 
   if (checkingAuth) return <LoadingSpinner />
   return (

@@ -5,15 +5,18 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 
 const Navbar = () => {
-    const { logout, user } = useUserStore();
-    const isAdmin = user?.role === 'admin';
+    const { logout, user, checkingAuth } = useUserStore();
     const { cart, getCartItems } = useCartStore();
-
+    const isAdmin = user?.role === 'admin';
+    
     useEffect(() => {
         if (!user) return;
         getCartItems();
-    }, []);
-
+    }, [user, getCartItems]);
+    
+    if (checkingAuth) return (
+        <header className="fixed top-0 left-0 w-full h-16 bg-gray-900 z-40" />
+    );
     const handleLogout = () => {
         logout();
     }
@@ -33,7 +36,7 @@ const Navbar = () => {
 
 
                     <nav className="flex flex-wrap items-center gap-4">
-                        <Link to={'/'} >Home</Link>
+                        <Link to={'/'} className='hidden sm:inline' >Home</Link>
                         {user && (
                             <Link to={'/cart'} className='relative group text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'>
                                 <ShoppingCart className='inline-block mr-1 group-hover:text-emerald-400' size={20} />

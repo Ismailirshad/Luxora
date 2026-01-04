@@ -16,10 +16,10 @@ export const useUserStore = create((set, get) => ({
         }
         try {
             const res = await api.post("/auth/signup", { name, email, password }, { withCredentials: true });
-            set({ user: res.data, loading: false })
+            set({ user: res.data.user, loading: false })
             toast.success("User created successfully")
         } catch (error) {
-            set({ loading: false });            
+            set({ loading: false });
             const msg = error.response?.data?.message || "Error creating user";
 
             if (error.response?.status === 429) {
@@ -30,12 +30,12 @@ export const useUserStore = create((set, get) => ({
         }
     },
 
-    login: async (email, password,navigate) => {
+    login: async (email, password, navigate) => {
         set({ loading: true });
 
         try {
             const res = await api.post("/auth/login", { email, password }, { withCredentials: true });
-            set({ user: res.data, loading: false })
+            set({ user: res.data.user, loading: false })
             if (res.data.message === "User already logged in") {
                 toast("You are already logged in!", { icon: "ℹ️" });
             } else {
@@ -43,7 +43,7 @@ export const useUserStore = create((set, get) => ({
             }
         } catch (error) {
             set({ loading: false });
-              const msg = error.response?.data?.message || "Error logging in user";
+            const msg = error.response?.data?.message || "Error logging in user";
 
             if (error.response?.status === 429) {
                 toast.error(msg);
@@ -63,8 +63,8 @@ export const useUserStore = create((set, get) => ({
         } catch (error) {
             set({ loading: false });
             toast.error(error.response.data.message || "Error logging out user")
-            
-          
+
+
         }
     },
 
@@ -75,17 +75,17 @@ export const useUserStore = create((set, get) => ({
             set({ user: res.data, checkingAuth: false })
         } catch (error) {
             set({ checkingAuth: false });
-               const msg = error.response?.data?.message || "Error checking auth";
+            const msg = error.response?.data?.message || "Error checking auth";
 
-        // ✅ If rate limit hit
-        if (error.response?.status === 429) {
-            toast.error(msg);
-            return navigate('/rate-limit');
-        }
-        // ✅ If user is not logged in, don't show toast
-        if (error.response?.status !== 401) {
-            toast.error(msg);
-        }
+            // ✅ If rate limit hit
+            if (error.response?.status === 429) {
+                toast.error(msg);
+                return navigate('/rate-limit');
+            }
+            // ✅ If user is not logged in, don't show toast
+            if (error.response?.status !== 401) {
+                toast.error(msg);
+            }
         }
     }
 }))
