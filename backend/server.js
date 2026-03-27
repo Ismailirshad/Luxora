@@ -23,7 +23,6 @@ app.use(
       "http://localhost:5000",
       "http://luxora.ismailirshad.in",
       "https://luxora-hazel.vercel.app",
-      "https://luxora-backend-one.vercel.app",
     ],
     credentials: true,
   }),
