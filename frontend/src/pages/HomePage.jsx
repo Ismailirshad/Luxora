@@ -1,7 +1,7 @@
 import CategoryItem from '../components/CategoryItem';
 import { useProductStore } from '../store/useProductStore';
 import FeaturedProducts from '../components/FeaturedProducts';
-import Skeleton from '../components/Skeletone';
+import Skeleton from '../components/skeletones/Skeletone.jsx';
 import { useEffect } from 'react';
 
 const categories = [

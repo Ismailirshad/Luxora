@@ -2,6 +2,7 @@ import { useProductStore } from '../store/useProductStore.js'
 import React, { useEffect } from 'react'
 import { motion } from "framer-motion"
 import ProductRow from './ProductRow.jsx';
+import ProductsListSkeleton from './skeletones/ProductListSkeleton.jsx';
 
 const ProductsList = () => {
   const deleteProduct = useProductStore(s => s.deleteProduct);
@@ -11,10 +12,15 @@ const ProductsList = () => {
   const products = useProductStore((state) => state.products);
   const toggleFeaturedProduct = useProductStore((state) => state.toggleFeaturedProduct);
   const fetchingPaginationProducts = useProductStore((state) => state.fetchingPaginationProducts);
+  const loading = useProductStore((state) => state.loading);
 
   useEffect(() => {
     fetchingPaginationProducts(1);
   }, [])
+
+  if (loading) {
+    return <ProductsListSkeleton />;
+  }
 
   return (
     <motion.div

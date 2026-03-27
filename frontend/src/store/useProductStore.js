@@ -18,7 +18,7 @@ export const useProductStore = create((set) => ({
 
         try {
             const res = await api.get(`/products/paginationProducts?page=${page}&limit=5`);
-
+            console.log("pagination products", res.data)
             set({products: res.data.products,
                 productCount: res.data.productCount,
                 page:res.data.page,
@@ -59,6 +59,7 @@ export const useProductStore = create((set) => ({
         set({ loading: true })
         try {
             const res = await api.get(`/products/category/${category}`);
+            console.log("products by category", res.data)
             set({products:res.data.products, loading: false})
         } catch (error) {
             set({ error: error.res?.data.message, loading: false })

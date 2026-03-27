@@ -38,7 +38,7 @@ function App() {
           <Route path='/' element={<HomePage />} />
           <Route path='/signup' element={!user ? <SignUpPage /> : <Navigate to={'/'} />} />
           <Route path='/login' element={!user ? <LoginPage /> : <Navigate to={'/'} />} />
-          <Route path='/sercret-dashboard' element={user?.role === "admin" ? <AdminPage /> : <Navigate to={'/login'} />} />
+          <Route path='/secret-dashboard' element={user?.role === "admin" ? <AdminPage /> : <Navigate to={'/login'} />} />
           <Route path='/category/:category' element={<CategoryPage />} />
           <Route path='/cart' element={user ? <CartPage /> : <navigate to='/login' />} />
           <Route path='/purchase-success' element={user ? <PurchaseSuccessPage /> : <Navigate to='/login' />} />

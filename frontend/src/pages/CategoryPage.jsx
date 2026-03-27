@@ -1,6 +1,6 @@
 import { useProductStore } from '../store/useProductStore.js'
 import ProductCard from '../components/ProductCard';
-import Skeleton from '../components/Skeletone.jsx';
+import Skeleton from '../components/skeletones/Skeletone.jsx';
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';

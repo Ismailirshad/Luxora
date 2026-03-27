@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { DollarSign, Package, ShoppingCart, Users } from 'lucide-react'
 import { useEffect } from 'react'
 import { CartesianGrid, LineChart, ResponsiveContainer, YAxis, XAxis, Tooltip, Legend, Line } from 'recharts';
+import AnalyticsTabSkeleton from './skeletones/AnalyticsTabSkeleton.jsx'
 
 const AnalyticsTab = () => {
   const [dailySalesData, setDailySalesData] = useState([]);
@@ -31,7 +32,7 @@ const AnalyticsTab = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <AnalyticsTabSkeleton />;
   }
   return (
     <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
