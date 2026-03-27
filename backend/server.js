@@ -21,7 +21,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "http://localhost:5000",
-      "http://luxora.ismailirshad.in",
+      "https://luxora.ismailirshad.in",
       "https://luxora-hazel.vercel.app",
     ],
     credentials: true,
